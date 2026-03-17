@@ -30,20 +30,22 @@ body {
   z-index: 10;
 }
 
+/* ===== LEFT PANEL ===== */
 .photo-side {
   width: 42%; height: 100%;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   position: relative; overflow: hidden;
   background: linear-gradient(160deg, #ebe5dc 0%, #d7d1ca 60%, #bd9979 100%);
-  gap: 20px;
+  gap: 2.5vh;
 }
 
 .logo-top {
-  width: 220px; height: auto; z-index: 2; opacity: 0.9;
+  width: clamp(140px, 22vw, 400px); height: auto; z-index: 2; opacity: 0.9;
+  margin-top: -3vh;
 }
 
 .photo-circle {
-  width: 280px; height: 280px; border-radius: 50%;
+  width: clamp(180px, 24vw, 420px); height: clamp(180px, 24vw, 420px); border-radius: 50%;
   border: 5px solid #ffffff;
   overflow: hidden; position: relative; z-index: 1;
   box-shadow: 0 8px 40px rgba(95,75,60,0.22), 0 2px 10px rgba(95,75,60,0.1);
@@ -56,42 +58,15 @@ body {
   display: flex; align-items: center; justify-content: center;
   background: linear-gradient(135deg, #f4efe8, #d7d1ca);
   font-family: 'Noto Serif', Georgia, serif;
-  font-size: 72px; color: #5f4b3c; font-weight: 700;
+  font-size: clamp(48px, 5vw, 90px); color: #5f4b3c; font-weight: 700;
 }
 .photo-circle img.loaded + .photo-initials { display: none; }
 
-.lp1,.lp2,.lp3,.lp4,.lp5,.lp6,.lp7,.lp8 { position:absolute; pointer-events:none; border-radius:50%; z-index:0; }
-.lp1 { top:10%; left:15%; width:5px; height:5px; background:rgba(255,255,255,0.6); animation: tw 3s ease-in-out infinite, fl1 6s ease-in-out infinite; }
-.lp2 { top:80%; left:25%; width:4px; height:4px; background:rgba(255,255,255,0.5); animation: tw 3.5s ease-in-out infinite 0.6s, fl2 7s ease-in-out infinite 0.5s; }
-.lp3 { top:45%; left:8%; width:6px; height:6px; background:rgba(255,255,255,0.4); animation: tw 4s ease-in-out infinite 1s, fl3 5s ease-in-out infinite 1s; }
-.lp4 { top:20%; left:60%; width:4px; height:4px; background:rgba(212,160,74,0.5); animation: tw 2.8s ease-in-out infinite 0.3s, fl2 6.5s ease-in-out infinite 1.5s; }
-.lp5 { top:65%; left:70%; width:5px; height:5px; background:rgba(255,255,255,0.45); animation: tw 3.2s ease-in-out infinite 1.2s, fl1 7.5s ease-in-out infinite 0.8s; }
-.lp6 { top:35%; left:40%; width:3px; height:3px; background:rgba(200,146,46,0.4); animation: tw 3.8s ease-in-out infinite 2s, fl3 8s ease-in-out infinite 0.2s; }
-.lp7 { top:90%; left:50%; width:5px; height:5px; background:rgba(255,255,255,0.35); animation: tw 2.5s ease-in-out infinite 0.9s, fl1 5.5s ease-in-out infinite 2s; }
-.lp8 { top:5%; left:35%; width:6px; height:6px; background:rgba(189,153,121,0.4); animation: tw 4.2s ease-in-out infinite 1.8s, fl2 9s ease-in-out infinite 1.2s; }
-
-@keyframes fl1 {
-  0%,100% { transform:translate(0,0); }
-  25% { transform:translate(8px,-12px); }
-  50% { transform:translate(-5px,-20px); }
-  75% { transform:translate(10px,-8px); }
-}
-@keyframes fl2 {
-  0%,100% { transform:translate(0,0); }
-  25% { transform:translate(-10px,8px); }
-  50% { transform:translate(6px,15px); }
-  75% { transform:translate(-8px,5px); }
-}
-@keyframes fl3 {
-  0%,100% { transform:translate(0,0); }
-  33% { transform:translate(12px,-10px); }
-  66% { transform:translate(-8px,12px); }
-}
-
+/* ===== RIGHT PANEL ===== */
 .text-side {
   width: 58%; height: 100%;
   display: flex; flex-direction: column; justify-content: center;
-  padding: 20px 50px;
+  padding: 2vh 4vw;
   position: relative; overflow: hidden;
   background: linear-gradient(160deg, #ffffff 0%, #f9f6f2 40%, #f4efe8 100%);
 }
@@ -112,79 +87,109 @@ body {
 .badge {
   display: inline-block; position: relative; z-index: 1;
   background: linear-gradient(135deg, #5f4b3c, #bd9979);
-  color: #fff; padding: 6px 22px; border-radius: 30px;
-  font-size: 12px; font-weight: 700; letter-spacing: 3px;
-  text-transform: uppercase; margin-bottom: 8px; width: fit-content;
+  color: #fff; padding: 0.6vh 2vw; border-radius: 30px;
+  font-size: clamp(10px, 1.1vw, 18px); font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; margin-bottom: 1vh; width: fit-content;
   box-shadow: 0 3px 12px rgba(95,75,60,0.2);
 }
 
 .rockstar-title {
   font-family: 'Noto Serif', Georgia, serif;
-  font-size: 36px; font-weight: 700; position: relative; z-index: 1;
+  font-size: clamp(24px, 3.2vw, 56px); font-weight: 700; position: relative; z-index: 1;
   background: linear-gradient(135deg, #5f4b3c, #bd9979, #ab9071);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text; line-height: 1.1; margin-bottom: 6px;
+  background-clip: text; line-height: 1.1; margin-bottom: 0.8vh;
 }
 
 .name {
   font-family: 'Noto Serif', Georgia, serif;
-  font-size: 28px; font-weight: 700; color: #5f4b3c;
-  margin-bottom: 4px; position: relative; z-index: 1;
+  font-size: clamp(20px, 2.5vw, 44px); font-weight: 700; color: #5f4b3c;
+  margin-bottom: 0.5vh; position: relative; z-index: 1;
 }
 .title {
-  font-size: 15px; color: #ab9071; font-weight: 600;
-  margin-bottom: 2px; letter-spacing: 0.5px; position: relative; z-index: 1;
+  font-size: clamp(13px, 1.3vw, 22px); color: #ab9071; font-weight: 600;
+  margin-bottom: 0.3vh; letter-spacing: 0.5px; position: relative; z-index: 1;
 }
 .tenure {
-  font-size: 13px; color: #8d8173; margin-bottom: 16px; position: relative; z-index: 1;
+  font-size: clamp(11px, 1.1vw, 18px); color: #8d8173; margin-bottom: 2vh; position: relative; z-index: 1;
 }
 
 .quote {
-  position: relative; padding-left: 20px; z-index: 1;
+  position: relative; padding-left: clamp(14px, 1.5vw, 24px); z-index: 1;
   border-left: 3px solid #d4a04a;
-  max-width: 540px;
+  max-width: 90%;
 }
 .quote p {
-  font-size: 14px; line-height: 1.6; color: #8d8173; font-style: italic;
-  padding-top: 20px;
+  font-size: clamp(12px, 1.2vw, 20px); line-height: 1.6; color: #8d8173; font-style: italic;
+  padding-top: clamp(14px, 1.5vw, 24px);
 }
 .quote-mark {
   font-family: 'Noto Serif', Georgia, serif;
-  font-size: 46px; color: #d4a04a; opacity: 0.5;
-  position: absolute; top: -14px; left: 6px; line-height: 1;
+  font-size: clamp(32px, 3.5vw, 60px); color: #d4a04a; opacity: 0.5;
+  position: absolute; top: clamp(-10px, -1vh, -16px); left: clamp(4px, 0.5vw, 8px); line-height: 1;
 }
 
+/* ===== STARS ===== */
 .star { position:absolute; pointer-events:none; font-family:serif;
   background: linear-gradient(135deg, #d4a04a, #e8c36a, #c8922e);
   -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
   animation: sp 4s ease-in-out infinite; z-index:0;
 }
-.star-t { top:20px; right:20px; font-size:180px; opacity:0.15; }
-.star-b { bottom:10px; right:120px; font-size:120px; opacity:0.12; animation-delay:2s; }
-.star-m { bottom:20px; left:20px; font-size:100px; opacity:0.08; animation-delay:1s; }
-.star-tr { top:10%; right:45%; font-size:60px; opacity:0.12; animation-delay:0.5s; }
-.star-bl { bottom:25%; right:10%; font-size:70px; opacity:0.1; animation-delay:3s; }
+.star-t { top:2vh; right:2vw; font-size:clamp(100px,13vw,220px); opacity:0.15; }
+.star-b { bottom:2vh; right:8vw; font-size:clamp(70px,9vw,150px); opacity:0.12; animation-delay:2s; }
+.star-tr { top:10%; right:35%; font-size:clamp(35px,4.5vw,70px); opacity:0.12; animation-delay:0.5s; }
+.star-bl { bottom:25%; right:8%; font-size:clamp(40px,5vw,80px); opacity:0.1; animation-delay:3s; }
+@keyframes sp { 0%,100%{opacity:0.1;} 50%{opacity:0.3;} }
 
 .ls { position:absolute; pointer-events:none; font-family:serif;
   background: linear-gradient(135deg, #d4a04a, #e8c36a, #c8922e);
   -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
   animation: sp 4s ease-in-out infinite; z-index:0;
 }
-.ls1 { top:8%; left:12%; font-size:80px; opacity:0.1; animation-delay:0.5s; }
-.ls2 { bottom:15%; left:60%; font-size:60px; opacity:0.08; animation-delay:2.5s; }
-.ls3 { top:60%; left:5%; font-size:50px; opacity:0.1; animation-delay:1.5s; }
-.ls4 { bottom:20px; left:15px; font-size:100px; opacity:0.12; animation-delay:1s; }
-@keyframes sp { 0%,100%{opacity:0.1;} 50%{opacity:0.3;} }
+.ls1 { top:8%; left:12%; font-size:clamp(50px,6vw,100px); opacity:0.1; animation-delay:0.5s; }
+.ls2 { bottom:15%; left:60%; font-size:clamp(35px,4.5vw,70px); opacity:0.08; animation-delay:2.5s; }
+.ls3 { top:60%; left:5%; font-size:clamp(30px,3.5vw,60px); opacity:0.1; animation-delay:1.5s; }
+.ls4 { bottom:3vh; left:2vw; font-size:clamp(60px,7vw,120px); opacity:0.12; animation-delay:1s; }
+
+/* ===== PARTICLES ===== */
+.lp1,.lp2,.lp3,.lp4,.lp5,.lp6,.lp7,.lp8 { position:absolute; pointer-events:none; border-radius:50%; z-index:0; }
+.lp1 { top:10%; left:15%; width:5px; height:5px; background:rgba(255,255,255,0.6); animation: tw 3s ease-in-out infinite, fl1 6s ease-in-out infinite; }
+.lp2 { top:80%; left:25%; width:4px; height:4px; background:rgba(255,255,255,0.5); animation: tw 3.5s ease-in-out infinite 0.6s, fl2 7s ease-in-out infinite 0.5s; }
+.lp3 { top:45%; left:8%; width:6px; height:6px; background:rgba(255,255,255,0.4); animation: tw 4s ease-in-out infinite 1s, fl3 5s ease-in-out infinite 1s; }
+.lp4 { top:20%; left:60%; width:4px; height:4px; background:rgba(212,160,74,0.5); animation: tw 2.8s ease-in-out infinite 0.3s, fl2 6.5s ease-in-out infinite 1.5s; }
+.lp5 { top:65%; left:70%; width:5px; height:5px; background:rgba(255,255,255,0.45); animation: tw 3.2s ease-in-out infinite 1.2s, fl1 7.5s ease-in-out infinite 0.8s; }
+.lp6 { top:35%; left:40%; width:3px; height:3px; background:rgba(200,146,46,0.4); animation: tw 3.8s ease-in-out infinite 2s, fl3 8s ease-in-out infinite 0.2s; }
+.lp7 { top:90%; left:50%; width:5px; height:5px; background:rgba(255,255,255,0.35); animation: tw 2.5s ease-in-out infinite 0.9s, fl1 5.5s ease-in-out infinite 2s; }
+.lp8 { top:5%; left:35%; width:6px; height:6px; background:rgba(189,153,121,0.4); animation: tw 4.2s ease-in-out infinite 1.8s, fl2 9s ease-in-out infinite 1.2s; }
 
 .sk { position:absolute; pointer-events:none; border-radius:50%; z-index:0; }
 .sk1 { top:15%; right:12%; width:7px; height:7px; background:#d4a04a; animation: tw 2.5s ease-in-out infinite; }
 .sk2 { top:70%; right:25%; width:5px; height:5px; background:#c8922e; animation: tw 3s ease-in-out infinite 0.8s; }
 .sk3 { top:35%; right:5%; width:6px; height:6px; background:#bd9979; animation: tw 2s ease-in-out infinite 1.5s; }
 .sk4 { top:55%; right:45%; width:4px; height:4px; background:#d4a04a; animation: tw 3.5s ease-in-out infinite 0.3s; }
-@keyframes tw { 0%,100%{opacity:0.15;transform:scale(1);} 50%{opacity:0.6;transform:scale(1.6);} }
 
+@keyframes tw { 0%,100%{opacity:0.15;transform:scale(1);} 50%{opacity:0.6;transform:scale(1.6);} }
+@keyframes fl1 {
+  0%,100% { transform:translate(0,0); }
+  25% { transform:translate(8px,-12px); }
+  50% { transform:translate(-5px,-20px); }
+  75% { transform:translate(10px,-8px); }
+}
+@keyframes fl2 {
+  0%,100% { transform:translate(0,0); }
+  25% { transform:translate(-10px,8px); }
+  50% { transform:translate(6px,15px); }
+  75% { transform:translate(-8px,5px); }
+}
+@keyframes fl3 {
+  0%,100% { transform:translate(0,0); }
+  33% { transform:translate(12px,-10px); }
+  66% { transform:translate(-8px,12px); }
+}
+
+/* ===== DOTS & TIMER ===== */
 .dots {
-  position: fixed; bottom: 28px; left: 50%;
+  position: fixed; bottom: 2.5vh; left: 50%;
   transform: translateX(-50%); display: flex; gap: 10px; z-index: 100;
 }
 .dot {
@@ -200,6 +205,49 @@ body {
   position: fixed; bottom: 0; left: 0; height: 3px;
   background: linear-gradient(90deg, #5f4b3c, #bd9979, #d4a04a);
   z-index: 100; transition: width 0.1s linear;
+}
+
+/* ===== MOBILE / PORTRAIT ===== */
+@media (max-aspect-ratio: 1/1) {
+  .slide { flex-direction: column; }
+  .photo-side {
+    width: 100%; height: 45%;
+    flex-direction: row; gap: 4vw; padding: 2vh 4vw;
+  }
+  .logo-top {
+    width: clamp(80px, 18vw, 160px); margin-top: 0;
+  }
+  .photo-circle {
+    width: clamp(120px, 28vw, 240px); height: clamp(120px, 28vw, 240px);
+  }
+  .text-side {
+    width: 100%; height: 55%;
+    padding: 2vh 5vw;
+    justify-content: flex-start;
+  }
+  .rockstar-title { font-size: clamp(22px, 5vw, 40px); }
+  .name { font-size: clamp(18px, 4.5vw, 34px); }
+  .title { font-size: clamp(12px, 2.5vw, 18px); }
+  .tenure { font-size: clamp(10px, 2vw, 15px); }
+  .badge { font-size: clamp(9px, 2vw, 14px); }
+  .quote p { font-size: clamp(11px, 2.2vw, 16px); }
+  .quote-mark { font-size: clamp(28px, 6vw, 46px); }
+  .star-t { font-size: clamp(60px, 18vw, 140px); }
+  .star-b { font-size: clamp(40px, 12vw, 100px); }
+}
+
+/* ===== SMALL LAPTOPS ===== */
+@media (max-height: 700px) and (min-aspect-ratio: 1/1) {
+  .logo-top { width: clamp(100px, 16vw, 240px); margin-top: -1vh; }
+  .photo-circle { width: clamp(150px, 18vw, 280px); height: clamp(150px, 18vw, 280px); }
+  .photo-side { gap: 1.5vh; }
+  .rockstar-title { font-size: clamp(20px, 2.5vw, 38px); }
+  .name { font-size: clamp(18px, 2.2vw, 32px); }
+  .badge { font-size: clamp(9px, 0.9vw, 14px); padding: 0.4vh 1.5vw; }
+  .title { font-size: clamp(11px, 1.1vw, 17px); }
+  .tenure { font-size: clamp(10px, 1vw, 15px); margin-bottom: 1.2vh; }
+  .quote p { font-size: clamp(11px, 1vw, 16px); padding-top: clamp(10px, 1vh, 16px); }
+  .quote-mark { font-size: clamp(28px, 3vw, 44px); }
 }
 </style>
 </head>
