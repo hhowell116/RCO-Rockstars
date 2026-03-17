@@ -6,533 +6,300 @@
 <title>Rowe Casa Rockstars</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --rco-cream: #f9f6f2;
-    --rco-warm-bg: #f4efe8;
-    --rco-stone: #ebe5dc;
-    --rco-tan-light: #d7d1ca;
-    --rco-taupe: #8d8173;
-    --rco-brown: #5f4b3c;
-    --rco-charcoal: #25282a;
-    --rco-warm-tan: #ab9071;
-    --rco-soft-camel: #bd9979;
-    --pop-gold: #d4a04a;
-    --pop-amber: #c8922e;
-    --pop-warm: #f5e6ce;
-  }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  width: 100vw; height: 100vh; overflow: hidden;
+  font-family: "Avenir Next", Avenir, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f9f6f2;
+  color: #25282a;
+}
 
-  html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
+.slide {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: row;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+  background: #f9f6f2;
+}
+.slide.active { opacity: 1; }
 
-  body {
-    font-family: "Avenir Next", Avenir, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--rco-cream);
-    color: var(--rco-charcoal);
-  }
+.slide::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, #5f4b3c, #bd9979, #d4a04a, #bd9979, #5f4b3c);
+  z-index: 10;
+}
 
-  .slide {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 1.2s ease-in-out;
-    background: var(--rco-cream);
-    overflow: hidden;
-  }
+.photo-side {
+  width: 42%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  background: linear-gradient(160deg, #ebe5dc 0%, #d7d1ca 60%, #bd9979 100%);
+  gap: 20px;
+}
 
-  .slide.active {
-    opacity: 1;
-  }
+.logo-top {
+  width: 220px; height: auto; z-index: 2; opacity: 0.9;
+}
 
-  .slide::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--rco-brown), var(--rco-soft-camel), var(--pop-gold), var(--rco-soft-camel), var(--rco-brown));
-    z-index: 10;
-  }
+.photo-circle {
+  width: 280px; height: 280px; border-radius: 50%;
+  border: 5px solid #ffffff;
+  overflow: hidden; position: relative; z-index: 1;
+  box-shadow: 0 8px 40px rgba(95,75,60,0.22), 0 2px 10px rgba(95,75,60,0.1);
+}
+.photo-circle img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.photo-initials {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #f4efe8, #d7d1ca);
+  font-family: 'Noto Serif', Georgia, serif;
+  font-size: 72px; color: #5f4b3c; font-weight: 700;
+}
+.photo-circle img.loaded + .photo-initials { display: none; }
 
-  .photo-panel {
-    flex: 0 0 42%;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(160deg, var(--rco-stone) 0%, var(--rco-tan-light) 60%, var(--rco-soft-camel) 100%);
-    gap: 24px;
-    padding-top: 20px;
-  }
+.lp1,.lp2,.lp3,.lp4,.lp5,.lp6,.lp7,.lp8 { position:absolute; pointer-events:none; border-radius:50%; z-index:0; }
+.lp1 { top:10%; left:15%; width:5px; height:5px; background:rgba(255,255,255,0.6); animation: tw 3s ease-in-out infinite, fl1 6s ease-in-out infinite; }
+.lp2 { top:80%; left:25%; width:4px; height:4px; background:rgba(255,255,255,0.5); animation: tw 3.5s ease-in-out infinite 0.6s, fl2 7s ease-in-out infinite 0.5s; }
+.lp3 { top:45%; left:8%; width:6px; height:6px; background:rgba(255,255,255,0.4); animation: tw 4s ease-in-out infinite 1s, fl3 5s ease-in-out infinite 1s; }
+.lp4 { top:20%; left:60%; width:4px; height:4px; background:rgba(212,160,74,0.5); animation: tw 2.8s ease-in-out infinite 0.3s, fl2 6.5s ease-in-out infinite 1.5s; }
+.lp5 { top:65%; left:70%; width:5px; height:5px; background:rgba(255,255,255,0.45); animation: tw 3.2s ease-in-out infinite 1.2s, fl1 7.5s ease-in-out infinite 0.8s; }
+.lp6 { top:35%; left:40%; width:3px; height:3px; background:rgba(200,146,46,0.4); animation: tw 3.8s ease-in-out infinite 2s, fl3 8s ease-in-out infinite 0.2s; }
+.lp7 { top:90%; left:50%; width:5px; height:5px; background:rgba(255,255,255,0.35); animation: tw 2.5s ease-in-out infinite 0.9s, fl1 5.5s ease-in-out infinite 2s; }
+.lp8 { top:5%; left:35%; width:6px; height:6px; background:rgba(189,153,121,0.4); animation: tw 4.2s ease-in-out infinite 1.8s, fl2 9s ease-in-out infinite 1.2s; }
 
-  .logo-top {
-    width: 220px;
-    height: auto;
-    z-index: 2;
-    opacity: 0.9;
-    margin-top: 10px;
-    max-width: 90%;
-  }
+@keyframes fl1 {
+  0%,100% { transform:translate(0,0); }
+  25% { transform:translate(8px,-12px); }
+  50% { transform:translate(-5px,-20px); }
+  75% { transform:translate(10px,-8px); }
+}
+@keyframes fl2 {
+  0%,100% { transform:translate(0,0); }
+  25% { transform:translate(-10px,8px); }
+  50% { transform:translate(6px,15px); }
+  75% { transform:translate(-8px,5px); }
+}
+@keyframes fl3 {
+  0%,100% { transform:translate(0,0); }
+  33% { transform:translate(12px,-10px); }
+  66% { transform:translate(-8px,12px); }
+}
 
-  .photo-frame {
-    width: 300px;
-    height: 300px;
-    max-width: 80%;
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    border: 5px solid #ffffff;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-    box-shadow: 0 8px 40px rgba(95,75,60,0.22), 0 2px 10px rgba(95,75,60,0.1);
-  }
+.text-side {
+  width: 58%; height: 100%;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 20px 50px;
+  position: relative; overflow: hidden;
+  background: linear-gradient(160deg, #ffffff 0%, #f9f6f2 40%, #f4efe8 100%);
+}
 
-  .photo-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
+.text-side::after {
+  content: '';
+  position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(212,160,74,0.04) 40%, rgba(232,195,106,0.08) 50%, rgba(212,160,74,0.04) 60%, transparent 100%);
+  animation: shimmer 8s ease-in-out infinite;
+  pointer-events: none; z-index: 0;
+}
+@keyframes shimmer {
+  0% { left: -100%; }
+  50% { left: 150%; }
+  100% { left: 150%; }
+}
 
-  .photo-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, var(--rco-warm-bg), var(--rco-tan-light));
-    font-family: 'Noto Serif', Georgia, serif;
-    font-size: 72px;
-    color: var(--rco-brown);
-    font-weight: 700;
-  }
+.badge {
+  display: inline-block; position: relative; z-index: 1;
+  background: linear-gradient(135deg, #5f4b3c, #bd9979);
+  color: #fff; padding: 6px 22px; border-radius: 30px;
+  font-size: 12px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; margin-bottom: 8px; width: fit-content;
+  box-shadow: 0 3px 12px rgba(95,75,60,0.2);
+}
 
-  .photo-frame img.loaded + .photo-placeholder { display: none; }
+.rockstar-title {
+  font-family: 'Noto Serif', Georgia, serif;
+  font-size: 36px; font-weight: 700; position: relative; z-index: 1;
+  background: linear-gradient(135deg, #5f4b3c, #bd9979, #ab9071);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; line-height: 1.1; margin-bottom: 6px;
+}
 
-  .info-panel {
-    flex: 1 1 auto;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 40px 48px 24px 40px;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(160deg, #ffffff 0%, var(--rco-cream) 40%, var(--rco-warm-bg) 100%);
-  }
+.name {
+  font-family: 'Noto Serif', Georgia, serif;
+  font-size: 28px; font-weight: 700; color: #5f4b3c;
+  margin-bottom: 4px; position: relative; z-index: 1;
+}
+.title {
+  font-size: 15px; color: #ab9071; font-weight: 600;
+  margin-bottom: 2px; letter-spacing: 0.5px; position: relative; z-index: 1;
+}
+.tenure {
+  font-size: 13px; color: #8d8173; margin-bottom: 16px; position: relative; z-index: 1;
+}
 
-  .month-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--rco-brown), var(--rco-soft-camel));
-    color: #ffffff;
-    padding: 7px 26px;
-    border-radius: 30px;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    width: fit-content;
-    box-shadow: 0 3px 12px rgba(95,75,60,0.2);
-  }
+.quote {
+  position: relative; padding-left: 20px; z-index: 1;
+  border-left: 3px solid #d4a04a;
+  max-width: 540px;
+}
+.quote p {
+  font-size: 14px; line-height: 1.6; color: #8d8173; font-style: italic;
+  padding-top: 20px;
+}
+.quote-mark {
+  font-family: 'Noto Serif', Georgia, serif;
+  font-size: 46px; color: #d4a04a; opacity: 0.5;
+  position: absolute; top: -14px; left: 6px; line-height: 1;
+}
 
-  .star-label {
-    font-family: 'Noto Serif', Georgia, serif;
-    font-size: 44px;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--rco-brown), var(--rco-soft-camel), var(--rco-warm-tan));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.1;
-    margin-bottom: 6px;
-  }
+.star { position:absolute; pointer-events:none; font-family:serif;
+  background: linear-gradient(135deg, #d4a04a, #e8c36a, #c8922e);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation: sp 4s ease-in-out infinite; z-index:0;
+}
+.star-t { top:20px; right:20px; font-size:180px; opacity:0.15; }
+.star-b { bottom:10px; right:120px; font-size:120px; opacity:0.12; animation-delay:2s; }
+.star-m { bottom:20px; left:20px; font-size:100px; opacity:0.08; animation-delay:1s; }
+.star-tr { top:10%; right:45%; font-size:60px; opacity:0.12; animation-delay:0.5s; }
+.star-bl { bottom:25%; right:10%; font-size:70px; opacity:0.1; animation-delay:3s; }
 
-  .emp-name {
-    font-family: 'Noto Serif', Georgia, serif;
-    font-size: 36px;
-    font-weight: 700;
-    color: var(--rco-brown);
-    margin-bottom: 6px;
-    word-break: break-word;
-  }
+.ls { position:absolute; pointer-events:none; font-family:serif;
+  background: linear-gradient(135deg, #d4a04a, #e8c36a, #c8922e);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation: sp 4s ease-in-out infinite; z-index:0;
+}
+.ls1 { top:8%; left:12%; font-size:80px; opacity:0.1; animation-delay:0.5s; }
+.ls2 { bottom:15%; left:60%; font-size:60px; opacity:0.08; animation-delay:2.5s; }
+.ls3 { top:60%; left:5%; font-size:50px; opacity:0.1; animation-delay:1.5s; }
+.ls4 { bottom:20px; left:15px; font-size:100px; opacity:0.12; animation-delay:1s; }
+@keyframes sp { 0%,100%{opacity:0.1;} 50%{opacity:0.3;} }
 
-  .emp-title {
-    font-size: 17px;
-    color: var(--rco-warm-tan);
-    font-weight: 600;
-    margin-bottom: 4px;
-    letter-spacing: 0.5px;
-  }
+.sk { position:absolute; pointer-events:none; border-radius:50%; z-index:0; }
+.sk1 { top:15%; right:12%; width:7px; height:7px; background:#d4a04a; animation: tw 2.5s ease-in-out infinite; }
+.sk2 { top:70%; right:25%; width:5px; height:5px; background:#c8922e; animation: tw 3s ease-in-out infinite 0.8s; }
+.sk3 { top:35%; right:5%; width:6px; height:6px; background:#bd9979; animation: tw 2s ease-in-out infinite 1.5s; }
+.sk4 { top:55%; right:45%; width:4px; height:4px; background:#d4a04a; animation: tw 3.5s ease-in-out infinite 0.3s; }
+@keyframes tw { 0%,100%{opacity:0.15;transform:scale(1);} 50%{opacity:0.6;transform:scale(1.6);} }
 
-  .emp-tenure {
-    font-size: 14px;
-    color: var(--rco-taupe);
-    margin-bottom: 14px;
-  }
+.dots {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%); display: flex; gap: 10px; z-index: 100;
+}
+.dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #d7d1ca; transition: all 0.4s; cursor: pointer;
+}
+.dot.active {
+  background: #5f4b3c; transform: scale(1.3);
+  box-shadow: 0 0 10px rgba(95,75,60,0.3);
+}
 
-  .quote-block {
-    position: relative;
-    padding-left: 28px;
-    border-left: 3px solid var(--pop-gold);
-    max-width: 580px;
-  }
-
-  .quote-block p {
-    font-size: 16px;
-    line-height: 1.7;
-    color: var(--rco-taupe);
-    font-style: italic;
-    overflow-wrap: break-word;
-  }
-
-  .quote-icon {
-    font-family: 'Noto Serif', Georgia, serif;
-    font-size: 56px;
-    color: var(--pop-gold);
-    opacity: 0.5;
-    position: absolute;
-    top: -18px;
-    left: -6px;
-    line-height: 1;
-  }
-
-  .deco-star {
-    position: absolute;
-    pointer-events: none;
-    font-family: serif;
-    background: linear-gradient(135deg, var(--pop-gold), #e8c36a, var(--pop-amber));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: starPulse 4s ease-in-out infinite;
-  }
-
-  .deco-star.top { top: 30px; right: 30px; font-size: 220px; opacity: 0.15; animation-delay: 0s; }
-  .deco-star.bot { bottom: 10px; right: 140px; font-size: 160px; opacity: 0.12; animation-delay: 2s; }
-  .deco-star.mid { top: 50%; left: -30px; font-size: 120px; opacity: 0.08; animation-delay: 1s; }
-
-  @keyframes starPulse {
-    0%, 100% { opacity: 0.1; transform: scale(1); }
-    50% { opacity: 0.3; transform: scale(1.05); }
-  }
-
-  .particle,
-  .left-particle {
-    position: absolute;
-    pointer-events: none;
-    z-index: 0;
-    border-radius: 50%;
-  }
-
-  .particle-1 { top: 12%; right: 10%; width: 8px; height: 8px; background: var(--pop-gold); animation: float1 6s ease-in-out infinite, twinkle 2.5s ease-in-out infinite; }
-  .particle-2 { top: 68%; right: 22%; width: 5px; height: 5px; background: var(--pop-amber); animation: float2 7s ease-in-out infinite 0.5s, twinkle 3s ease-in-out infinite 0.8s; }
-  .particle-3 { top: 32%; right: 4%; width: 6px; height: 6px; background: var(--rco-soft-camel); animation: float3 5s ease-in-out infinite 1s, twinkle 2s ease-in-out infinite 1.5s; }
-  .particle-4 { top: 52%; right: 42%; width: 4px; height: 4px; background: var(--pop-gold); animation: float2 8s ease-in-out infinite 0.3s, twinkle 3.5s ease-in-out infinite 0.3s; }
-  .particle-5 { top: 85%; right: 8%; width: 7px; height: 7px; background: var(--rco-warm-tan); animation: float1 5.5s ease-in-out infinite 2s, twinkle 2.8s ease-in-out infinite 1s; }
-  .particle-6 { top: 20%; right: 35%; width: 3px; height: 3px; background: var(--pop-gold); animation: float3 9s ease-in-out infinite 1.5s, twinkle 4s ease-in-out infinite 2s; }
-  .particle-7 { top: 45%; right: 15%; width: 5px; height: 5px; background: var(--pop-amber); animation: float1 6.5s ease-in-out infinite 0.8s, twinkle 3.2s ease-in-out infinite 0.5s; }
-  .particle-8 { top: 75%; right: 38%; width: 4px; height: 4px; background: var(--rco-soft-camel); animation: float2 7.5s ease-in-out infinite 2.5s, twinkle 2.2s ease-in-out infinite 1.8s; }
-  .particle-9 { top: 8%; right: 28%; width: 6px; height: 6px; background: var(--pop-gold); animation: float3 6s ease-in-out infinite 0.2s, twinkle 3.8s ease-in-out infinite 0.7s; }
-  .particle-10 { top: 60%; right: 5%; width: 3px; height: 3px; background: var(--pop-amber); animation: float1 8s ease-in-out infinite 1.2s, twinkle 2.6s ease-in-out infinite 1.3s; }
-
-  .left-particle-1 { top: 10%; left: 15%; width: 5px; height: 5px; background: rgba(255,255,255,0.6); animation: float2 7s ease-in-out infinite 0.4s, twinkle 3s ease-in-out infinite; }
-  .left-particle-2 { top: 80%; left: 25%; width: 4px; height: 4px; background: rgba(255,255,255,0.5); animation: float3 6s ease-in-out infinite 1.2s, twinkle 3.5s ease-in-out infinite 0.6s; }
-  .left-particle-3 { top: 45%; left: 8%; width: 6px; height: 6px; background: rgba(255,255,255,0.4); animation: float1 8s ease-in-out infinite 0.7s, twinkle 4s ease-in-out infinite 1s; }
-  .left-particle-4 { top: 25%; left: 70%; width: 3px; height: 3px; background: rgba(212,160,74,0.4); animation: float2 5.5s ease-in-out infinite 2s, twinkle 2.5s ease-in-out infinite 1.5s; }
-  .left-particle-5 { top: 65%; left: 60%; width: 5px; height: 5px; background: rgba(255,255,255,0.35); animation: float3 7.5s ease-in-out infinite 1.8s, twinkle 3.2s ease-in-out infinite 0.9s; }
-
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.1; transform: scale(1); }
-    50% { opacity: 0.7; transform: scale(1.8); }
-  }
-
-  @keyframes float1 {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(8px, -12px); }
-    50% { transform: translate(-5px, -20px); }
-    75% { transform: translate(10px, -8px); }
-  }
-
-  @keyframes float2 {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(-10px, 8px); }
-    50% { transform: translate(6px, 15px); }
-    75% { transform: translate(-8px, 5px); }
-  }
-
-  @keyframes float3 {
-    0%, 100% { transform: translate(0, 0); }
-    33% { transform: translate(12px, -10px); }
-    66% { transform: translate(-8px, 12px); }
-  }
-
-  .info-panel::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent 0%, rgba(212,160,74,0.04) 40%, rgba(232,195,106,0.08) 50%, rgba(212,160,74,0.04) 60%, transparent 100%);
-    animation: shimmer 8s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  @keyframes shimmer {
-    0% { left: -100%; }
-    50% { left: 150%; }
-    100% { left: 150%; }
-  }
-
-  .month-badge, .star-label, .emp-name, .emp-title, .emp-tenure, .quote-block, .deco-star {
-    position: relative;
-    z-index: 1;
-  }
-
-  .progress-bar {
-    position: fixed;
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    z-index: 100;
-  }
-
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--rco-tan-light);
-    transition: all 0.4s;
-    cursor: pointer;
-  }
-
-  .dot.active {
-    background: var(--rco-brown);
-    transform: scale(1.3);
-    box-shadow: 0 0 10px rgba(95,75,60,0.3);
-  }
-
-  .timer-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--rco-brown), var(--rco-soft-camel), var(--pop-gold));
-    z-index: 100;
-    transition: width 0.1s linear;
-  }
-
-  @media (max-width: 1100px) {
-    .info-panel {
-      padding: 32px 32px 20px 28px;
-    }
-
-    .star-label { font-size: 36px; }
-    .emp-name { font-size: 30px; }
-    .quote-block p { font-size: 15px; line-height: 1.6; }
-    .photo-frame { width: 250px; height: 250px; }
-  }
+.tbar {
+  position: fixed; bottom: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, #5f4b3c, #bd9979, #d4a04a);
+  z-index: 100; transition: width 0.1s linear;
+}
 </style>
 </head>
 <body>
 
-<div id="slideContainer"></div>
-<div class="progress-bar" id="progressBar"></div>
-<div class="timer-bar" id="timerBar"></div>
+<div id="slides"></div>
+<div class="dots" id="dots"></div>
+<div class="tbar" id="tbar"></div>
 
 <script>
-const employees = [
-  {
-    name: "Jacob Schooley",
-    title: "Quality Assurance Specialist",
-    tenure: "1 year, 3 months",
-    month: "February",
-    quote: "I enjoy the people and the vibe. I went through a personal matter and received nothing but support from my supervisors and my Rowe Casa family. This hammered in loyalty from the start. I also appreciate the opportunities that I have been given and the opportunities to grow within Rowe Casa.",
-    initials: "JS",
-    imageFile: "jacobschooley.png"
-  },
-  {
-    name: "Hillary Kemp",
-    title: "Quality Assurance Specialist",
-    tenure: "2 years, 5 months",
-    month: "February",
-    quote: "\"Quality means doing it right when no one is looking.\" — Henry Ford\n\nI like my job because it allows me to solve problems, ensure quality standards are met, and contributes to improving processes. It's rewarding to know the work I do helps maintain product quality and supports the team!",
-    initials: "HK",
-    imageFile: "hillarykemp.png"
-  },
-  {
-    name: "Terri Longest",
-    title: "Shipping Specialist",
-    tenure: "1 year, 4 months",
-    month: "February",
-    quote: "Rowe Casa Organics provides great opportunities for learning and advancement. I enjoy working for this family-oriented company. Their professional staff is the best I have ever worked for.",
-    initials: "TL",
-    imageFile: "terrilongest.png"
-  },
-  {
-    name: "Kyle Longest",
-    title: "Production Specialist",
-    tenure: "4 months",
-    month: "January",
-    quote: "I admire how Rowe Casa puts God above business and money. I like how Rowe Casa cares about its employees. I also like how Rowe Casa listens to its employees and follows through with employee ideas on making things better.",
-    initials: "KL",
-    imageFile: "kylelongest.png"
-  },
-  {
-    name: "Derric Watson",
-    title: "Kitchen Supervisor",
-    tenure: "1 year, 4 months",
-    month: "January",
-    quote: "The teammates and the camaraderie are what make working at Rowe Casa special. There's never a dull moment working with the great group of people I see daily.",
-    initials: "DW",
-    imageFile: "derricwatson.png"
-  },
-  {
-    name: "Marcus Griffin",
-    title: "Warehouse Inventory Associate",
-    tenure: "1 year",
-    month: "January",
-    quote: "\"Choose to be optimistic and have a positive outlook regardless of the circumstance.\"\n\nWhat he likes best working at Rowe Casa Organics are the amazing people he has met throughout his time here and the work environment.",
-    initials: "MG",
-    imageFile: "marcusgriffin.png"
-  },
-  {
-    name: "Andrea Munoz",
-    title: "Quality Assurance Supervisor",
-    tenure: "5 years",
-    month: "February",
-    quote: "I have never worked somewhere that has allowed me to grow like Rowe Casa has. I am grateful for the opportunity to be here.",
-    initials: "AM",
-    imageFile: "andreamunoz.png"
-  }
+var employees = [
+  { name:"Jacob Schooley", title:"Quality Assurance Specialist", tenure:"1 year, 3 months", month:"February",
+    quote:"I enjoy the people and the vibe. I went through a personal matter and received nothing but support from my supervisors and my Rowe Casa family. This hammered in loyalty from the start. I also appreciate the opportunities that I have been given and the opportunities to grow within Rowe Casa.",
+    initials:"JS", img:"jacobschooley.png" },
+  { name:"Hillary Kemp", title:"Quality Assurance Specialist", tenure:"2 years, 5 months", month:"February",
+    quote:"\"Quality means doing it right when no one is looking.\" — Henry Ford<br><br>I like my job because it allows me to solve problems, ensure quality standards are met, and contributes to improving processes. It's rewarding to know the work I do helps maintain product quality and supports the team!",
+    initials:"HK", img:"hillarykemp.png" },
+  { name:"Terri Longest", title:"Shipping Specialist", tenure:"1 year, 4 months", month:"February",
+    quote:"Rowe Casa Organics provides great opportunities for learning and advancement. I enjoy working for this family-oriented company. Their professional staff is the best I have ever worked for.",
+    initials:"TL", img:"terrilongest.png" },
+  { name:"Kyle Longest", title:"Production Specialist", tenure:"4 months", month:"January",
+    quote:"I admire how Rowe Casa puts God above business and money. I like how Rowe Casa cares about its employees. I also like how Rowe Casa listens to its employees and follows through with employee ideas on making things better.",
+    initials:"KL", img:"kylelongest.png" },
+  { name:"Derric Watson", title:"Kitchen Supervisor", tenure:"1 year, 4 months", month:"January",
+    quote:"The teammates and the camaraderie are what make working at Rowe Casa special. There's never a dull moment working with the great group of people I see daily.",
+    initials:"DW", img:"derricwatson.png" },
+  { name:"Marcus Griffin", title:"Warehouse Inventory Associate", tenure:"1 year", month:"January",
+    quote:"\"Choose to be optimistic and have a positive outlook regardless of the circumstance.\"<br><br>What he likes best working at Rowe Casa Organics are the amazing people he has met throughout his time here and the work environment.",
+    initials:"MG", img:"marcusgriffin.png" },
+  { name:"Andrea Munoz", title:"Quality Assurance Supervisor", tenure:"5 years", month:"February",
+    quote:"I have never worked somewhere that has allowed me to grow like Rowe Casa has. I am grateful for the opportunity to be here.",
+    initials:"AM", img:"andreamunoz.png" }
 ];
 
-const container = document.getElementById('slideContainer');
-const progressBar = document.getElementById('progressBar');
+var box = document.getElementById('slides');
+var dotsBox = document.getElementById('dots');
 
-employees.forEach((emp, i) => {
-  const slide = document.createElement('div');
-  slide.className = 'slide' + (i === 0 ? ' active' : '');
-  slide.id = 'slide-' + i;
+for (var i = 0; i < employees.length; i++) {
+  var e = employees[i];
+  var d = document.createElement('div');
+  d.className = 'slide' + (i===0?' active':'');
+  d.id = 's'+i;
+  d.innerHTML =
+    '<div class="photo-side">' +
+      '<div class="lp1"></div><div class="lp2"></div><div class="lp3"></div><div class="lp4"></div><div class="lp5"></div><div class="lp6"></div><div class="lp7"></div><div class="lp8"></div>' +
+      '<div class="ls ls1">&#9733;</div><div class="ls ls2">&#9733;</div><div class="ls ls3">&#9733;</div><div class="ls ls4">&#9733;</div>' +
+      '<img class="logo-top" src="logo.png" alt="RCO" onerror="this.style.display=\'none\'">' +
+      '<div class="photo-circle">' +
+        '<img src="'+e.img+'" alt="'+e.name+'" onerror="this.style.display=\'none\'" onload="this.classList.add(\'loaded\')">' +
+        '<div class="photo-initials">'+e.initials+'</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="text-side">' +
+      '<div class="star star-t">&#9733;</div>' +
+      '<div class="star star-b">&#9733;</div>' +
+      '<div class="star star-tr">&#9733;</div>' +
+      '<div class="star star-bl">&#9733;</div>' +
+      '<div class="sk sk1"></div><div class="sk sk2"></div><div class="sk sk3"></div><div class="sk sk4"></div>' +
+      '<div class="badge">'+e.month+' Rockstar</div>' +
+      '<div class="rockstar-title">&#9733; ROCKSTAR &#9733;</div>' +
+      '<div class="name">'+e.name+'</div>' +
+      '<div class="title">'+e.title+'</div>' +
+      '<div class="tenure">'+e.tenure+'</div>' +
+      '<div class="quote"><span class="quote-mark">&ldquo;</span><p>'+e.quote+'</p></div>' +
+    '</div>';
+  box.appendChild(d);
 
-  const quoteHtml = emp.quote.replace(/\n/g, '<br>');
+  var dot = document.createElement('div');
+  dot.className = 'dot'+(i===0?' active':'');
+  dot.setAttribute('data-i', i);
+  dot.onclick = function(){ go(parseInt(this.getAttribute('data-i'))); };
+  dotsBox.appendChild(dot);
+}
 
-  slide.innerHTML = `
-    <div class="photo-panel">
-      <div class="left-particle left-particle-1"></div>
-      <div class="left-particle left-particle-2"></div>
-      <div class="left-particle left-particle-3"></div>
-      <div class="left-particle left-particle-4"></div>
-      <div class="left-particle left-particle-5"></div>
-      <img class="logo-top" src="logo.png" alt="RCO" onerror="this.style.display='none'">
-      <div class="photo-frame">
-        <img src="${emp.imageFile}" alt="${emp.name}" onerror="this.style.display='none'" onload="this.classList.add('loaded')">
-        <div class="photo-placeholder">${emp.initials}</div>
-      </div>
-    </div>
-    <div class="info-panel">
-      <div class="deco-star top">&#9733;</div>
-      <div class="deco-star bot">&#9733;</div>
-      <div class="deco-star mid">&#9733;</div>
-      <div class="particle particle-1"></div>
-      <div class="particle particle-2"></div>
-      <div class="particle particle-3"></div>
-      <div class="particle particle-4"></div>
-      <div class="particle particle-5"></div>
-      <div class="particle particle-6"></div>
-      <div class="particle particle-7"></div>
-      <div class="particle particle-8"></div>
-      <div class="particle particle-9"></div>
-      <div class="particle particle-10"></div>
-      <div class="month-badge">${emp.month} Rockstar</div>
-      <div class="star-label">&#9733; ROCKSTAR &#9733;</div>
-      <div class="emp-name">${emp.name}</div>
-      <div class="emp-title">${emp.title}</div>
-      <div class="emp-tenure">${emp.tenure}</div>
-      <div class="quote-block">
-        <span class="quote-icon">&ldquo;</span>
-        <p>${quoteHtml}</p>
-      </div>
-    </div>
-  `;
-  container.appendChild(slide);
+var cur = 0, DUR = 10000, raf = null, t0 = 0;
+var tbar = document.getElementById('tbar');
 
-  const dot = document.createElement('div');
-  dot.className = 'dot' + (i === 0 ? ' active' : '');
-  dot.onclick = () => goToSlide(i);
-  progressBar.appendChild(dot);
+function go(n) {
+  document.querySelectorAll('.slide').forEach(function(s){s.classList.remove('active');});
+  document.querySelectorAll('.dot').forEach(function(d){d.classList.remove('active');});
+  document.getElementById('s'+n).classList.add('active');
+  dotsBox.children[n].classList.add('active');
+  cur = n; t0 = Date.now();
+  if(raf) cancelAnimationFrame(raf);
+  tick();
+}
+
+function tick() {
+  var el = Date.now() - t0;
+  tbar.style.width = Math.min(el/DUR*100,100)+'%';
+  if(el >= DUR) go((cur+1)%employees.length);
+  else raf = requestAnimationFrame(tick);
+}
+
+t0 = Date.now(); tick();
+
+document.addEventListener('keydown', function(ev){
+  if(ev.key==='ArrowRight'||ev.key===' '){ev.preventDefault();go((cur+1)%employees.length);}
+  if(ev.key==='ArrowLeft'){ev.preventDefault();go((cur-1+employees.length)%employees.length);}
 });
-
-let current = 0;
-const DURATION = 10000;
-let timer = null;
-let startTime = 0;
-const timerBar = document.getElementById('timerBar');
-
-function goToSlide(index) {
-  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
-  document.getElementById('slide-' + index).classList.add('active');
-  progressBar.children[index].classList.add('active');
-  current = index;
-  resetTimer();
-}
-
-function nextSlide() {
-  goToSlide((current + 1) % employees.length);
-}
-
-function resetTimer() {
-  startTime = Date.now();
-  if (timer) cancelAnimationFrame(timer);
-  updateTimer();
-}
-
-function updateTimer() {
-  const elapsed = Date.now() - startTime;
-  const pct = Math.min((elapsed / DURATION) * 100, 100);
-  timerBar.style.width = pct + '%';
-  if (elapsed >= DURATION) {
-    nextSlide();
-  } else {
-    timer = requestAnimationFrame(updateTimer);
-  }
-}
-
-resetTimer();
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
-  if (e.key === 'ArrowLeft') { e.preventDefault(); goToSlide((current - 1 + employees.length) % employees.length); }
-});
-
-/*
-============================================================
-  FILES TO PLACE IN THE SAME FOLDER AS THIS HTML:
-
-  logo.png            = RCO logo
-  jacobschooley.png   = Jacob Schooley
-  hillarykemp.png     = Hillary Kemp
-  terrilongest.png    = Terri Longest
-  kylelongest.png     = Kyle Longest
-  derricwatson.png    = Derric Watson
-  marcusgriffin.png   = Marcus Griffin
-  andreamunoz.png     = Andrea Munoz
-============================================================
-*/
 </script>
 </body>
 </html>
