@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rowe Casa Rockstars</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rco-cream: #d7d1ca;
+    --rco-stone: #d6d1c3;
+    --rco-taupe: #8d8173;
+    --rco-brown: #5f4b3c;
+    --rco-charcoal: #25282a;
+    --rco-warm-tan: #ab9071;
+    --rco-soft-camel: #bd9979;
+    --rco-olive: #4d4933;
+    --rco-clay: #b08979;
+    --rco-bluegray: #393d46;
+    --rco-plum: #492426;
+    --rco-lightgray: #aaa0a1;
+    --page-bg: #f6f0e6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 100vw; height: 100vh; overflow: hidden;
+    font-family: "Avenir Next", Avenir, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--rco-charcoal);
+    color: #fff;
+  }
+
+  /* ===== SLIDES ===== */
+  .slide {
+    position: absolute; inset: 0;
+    display: flex;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+    background: linear-gradient(135deg, var(--rco-charcoal) 0%, var(--rco-bluegray) 40%, var(--rco-charcoal) 100%);
+  }
+  .slide.active { opacity: 1; }
+
+  /* Left panel */
+  .photo-panel {
+    flex: 0 0 42%; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    background: linear-gradient(180deg, var(--rco-brown) 0%, var(--rco-charcoal) 100%);
+  }
+  .photo-panel::after {
+    content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 80px;
+    background: linear-gradient(90deg, transparent, var(--rco-charcoal));
+  }
+  .photo-frame {
+    width: 320px; height: 320px; border-radius: 50%;
+    border: 4px solid var(--rco-soft-camel);
+    overflow: hidden; position: relative; z-index: 1;
+    box-shadow: 0 0 60px rgba(189,153,121,0.25), 0 0 120px rgba(189,153,121,0.08);
+  }
+  .photo-frame img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--rco-brown), var(--rco-warm-tan));
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 72px; color: var(--rco-cream); font-weight: 700;
+  }
+  /* Hide fallback when image loads */
+  .photo-frame img.loaded + .photo-placeholder { display: none; }
+
+  /* Right panel */
+  .info-panel {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; padding: 60px 80px 60px 50px;
+    position: relative;
+  }
+
+  .month-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--rco-soft-camel), var(--rco-warm-tan));
+    color: var(--rco-charcoal); padding: 6px 24px; border-radius: 30px;
+    font-size: 13px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 16px; width: fit-content;
+  }
+
+  .star-label {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 48px; font-weight: 700;
+    background: linear-gradient(135deg, var(--rco-soft-camel), var(--rco-cream), var(--rco-soft-camel));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; line-height: 1.1; margin-bottom: 8px;
+  }
+
+  .emp-name {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 36px; font-weight: 700; color: var(--rco-cream);
+    margin-bottom: 6px;
+  }
+  .emp-title {
+    font-size: 17px; color: var(--rco-soft-camel); font-weight: 600;
+    margin-bottom: 4px; letter-spacing: 0.5px;
+  }
+  .emp-tenure {
+    font-size: 14px; color: var(--rco-taupe); margin-bottom: 28px;
+  }
+
+  .quote-block {
+    position: relative; padding-left: 24px;
+    border-left: 3px solid var(--rco-soft-camel);
+    max-width: 580px;
+  }
+  .quote-block p {
+    font-size: 16px; line-height: 1.7; color: var(--rco-stone);
+    font-style: italic;
+  }
+  .quote-icon {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 56px; color: var(--rco-soft-camel); opacity: 0.35;
+    position: absolute; top: -18px; left: -6px; line-height: 1;
+  }
+
+  /* ===== HEADER BAR ===== */
+  /* Logo circle in photo panel */
+  .logo-circle {
+    position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
+    width: 100px; height: 100px; border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid var(--rco-soft-camel);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2; overflow: hidden;
+    box-shadow: 0 0 30px rgba(189,153,121,0.15);
+  }
+  .logo-circle img {
+    width: 75%; height: 75%; object-fit: contain;
+    filter: brightness(0) invert(0.85);
+  }
+  .logo-circle .logo-fallback {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 28px; font-weight: 700; color: var(--rco-cream);
+    letter-spacing: 1px;
+  }
+
+  /* ===== PROGRESS DOTS ===== */
+  .progress-bar {
+    position: fixed; bottom: 28px; left: 50%;
+    transform: translateX(-50%); display: flex; gap: 10px; z-index: 100;
+  }
+  .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(189,153,121,0.25); transition: all 0.4s;
+    cursor: pointer;
+  }
+  .dot.active {
+    background: var(--rco-soft-camel); transform: scale(1.3);
+    box-shadow: 0 0 10px rgba(189,153,121,0.4);
+  }
+
+  /* ===== TIMER BAR ===== */
+  .timer-bar {
+    position: fixed; bottom: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--rco-brown), var(--rco-soft-camel));
+    z-index: 100; transition: width 0.1s linear;
+  }
+
+  /* ===== DECORATIVE ===== */
+  .deco-star {
+    position: absolute; color: var(--rco-soft-camel); opacity: 0.06;
+    font-size: 180px; font-family: serif; pointer-events: none;
+  }
+  .deco-star.top { top: 50px; right: 50px; }
+  .deco-star.bot { bottom: 30px; right: 180px; font-size: 130px; }
+</style>
+</head>
+<body>
+
+<!-- No top header bar -->
+
+<div id="slideContainer"></div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="timer-bar" id="timerBar"></div>
+
+<script>
+const employees = [
+  {
+    name: "Jacob Schooley",
+    title: "Quality Assurance Specialist",
+    tenure: "1 year, 3 months",
+    month: "February",
+    quote: "I enjoy the people and the vibe. I went through a personal matter and received nothing but support from my supervisors and my Rowe Casa family. This hammered in loyalty from the start. I also appreciate the opportunities that I have been given and the opportunities to grow within Rowe Casa.",
+    initials: "JS",
+    imageIndex: 1
+  },
+  {
+    name: "Hillary Kemp",
+    title: "Quality Assurance Specialist",
+    tenure: "2 years, 5 months",
+    month: "February",
+    quote: "\"Quality means doing it right when no one is looking.\" — Henry Ford\n\nI like my job because it allows me to solve problems, ensure quality standards are met, and contributes to improving processes. It's rewarding to know the work I do helps maintain product quality and supports the team!",
+    initials: "HK",
+    imageIndex: 2
+  },
+  {
+    name: "Terri Longest",
+    title: "Shipping Specialist",
+    tenure: "1 year, 4 months",
+    month: "February",
+    quote: "Rowe Casa Organics provides great opportunities for learning and advancement. I enjoy working for this family-oriented company. Their professional staff is the best I have ever worked for.",
+    initials: "TL",
+    imageIndex: 3
+  },
+  {
+    name: "Kyle Longest",
+    title: "Production Specialist",
+    tenure: "4 months",
+    month: "January",
+    quote: "I admire how Rowe Casa puts God above business and money. I like how Rowe Casa cares about its employees. I also like how Rowe Casa listens to its employees and follows through with employee ideas on making things better.",
+    initials: "KL",
+    imageIndex: 4
+  },
+  {
+    name: "Derric Watson",
+    title: "Kitchen Supervisor",
+    tenure: "1 year, 4 months",
+    month: "January",
+    quote: "The teammates and the camaraderie are what make working at Rowe Casa special. There's never a dull moment working with the great group of people I see daily.",
+    initials: "DW",
+    imageIndex: 5
+  },
+  {
+    name: "Marcus Griffin",
+    title: "Warehouse Inventory Associate",
+    tenure: "1 year",
+    month: "January",
+    quote: "\"Choose to be optimistic and have a positive outlook regardless of the circumstance.\"\n\nWhat he likes best working at Rowe Casa Organics are the amazing people he has met throughout his time here and the work environment.",
+    initials: "MG",
+    imageIndex: 6
+  },
+  {
+    name: "Andrea Munoz",
+    title: "Quality Assurance Supervisor",
+    tenure: "5 years",
+    month: "February",
+    quote: "I have never worked somewhere that has allowed me to grow like Rowe Casa has. I am grateful for the opportunity to be here.",
+    initials: "AM",
+    imageIndex: 7
+  }
+];
+
+const container = document.getElementById('slideContainer');
+const progressBar = document.getElementById('progressBar');
+
+employees.forEach((emp, i) => {
+  const slide = document.createElement('div');
+  slide.className = 'slide' + (i === 0 ? ' active' : '');
+  slide.id = 'slide-' + i;
+
+  const quoteHtml = emp.quote.replace(/\n/g, '<br>');
+  const hasImg = emp.imageIndex > 0;
+
+  slide.innerHTML = `
+    <div class="photo-panel">
+      <div class="logo-circle">
+        <img id="rco-logo" src="" alt="RCO" onerror="this.style.display='none'">
+        <span class="logo-fallback">RC</span>
+      </div>
+      <div class="photo-frame">
+        ${hasImg
+          ? `<img id="photo-${emp.imageIndex}" src="" alt="${emp.name}" onerror="this.style.display='none'" onload="this.classList.add('loaded')">
+             <div class="photo-placeholder">${emp.initials}</div>`
+          : `<div class="photo-placeholder">${emp.initials}</div>`
+        }
+      </div>
+    </div>
+    <div class="info-panel">
+      <div class="deco-star top">&#9733;</div>
+      <div class="deco-star bot">&#9733;</div>
+      <div class="month-badge">${emp.month} Rockstar</div>
+      <div class="star-label">&#9733; ROCKSTAR &#9733;</div>
+      <div class="emp-name">${emp.name}</div>
+      <div class="emp-title">${emp.title}</div>
+      <div class="emp-tenure">${emp.tenure}</div>
+      <div class="quote-block">
+        <span class="quote-icon">&ldquo;</span>
+        <p>${quoteHtml}</p>
+      </div>
+    </div>
+  `;
+  container.appendChild(slide);
+
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goToSlide(i);
+  progressBar.appendChild(dot);
+});
+
+let current = 0;
+const DURATION = 10000;
+let timer = null;
+let startTime = 0;
+const timerBar = document.getElementById('timerBar');
+
+function goToSlide(index) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+  document.getElementById('slide-' + index).classList.add('active');
+  progressBar.children[index].classList.add('active');
+  current = index;
+  resetTimer();
+}
+
+function nextSlide() {
+  goToSlide((current + 1) % employees.length);
+}
+
+function resetTimer() {
+  startTime = Date.now();
+  if (timer) cancelAnimationFrame(timer);
+  updateTimer();
+}
+
+function updateTimer() {
+  const elapsed = Date.now() - startTime;
+  const pct = Math.min((elapsed / DURATION) * 100, 100);
+  timerBar.style.width = pct + '%';
+  if (elapsed >= DURATION) {
+    nextSlide();
+  } else {
+    timer = requestAnimationFrame(updateTimer);
+  }
+}
+
+resetTimer();
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); goToSlide((current - 1 + employees.length) % employees.length); }
+});
+
+
+// Set logo on all slides
+document.querySelectorAll('#rco-logo').forEach(el => el.src = 'logo.png');
+
+// Set employee photos
+if(document.getElementById('photo-1')) document.getElementById('photo-1').src = 'photo1.jpg';
+if(document.getElementById('photo-2')) document.getElementById('photo-2').src = 'photo2.jpg';
+if(document.getElementById('photo-3')) document.getElementById('photo-3').src = 'photo3.jpg';
+if(document.getElementById('photo-4')) document.getElementById('photo-4').src = 'photo4.jpg';
+if(document.getElementById('photo-5')) document.getElementById('photo-5').src = 'photo5.jpg';
+if(document.getElementById('photo-6')) document.getElementById('photo-6').src = 'photo6.jpg';
+if(document.getElementById('photo-7')) document.getElementById('photo-7').src = 'photo7.jpg';
+</script>
+</body>
+</html>
